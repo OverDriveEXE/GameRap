@@ -2,15 +2,23 @@ using UnityEngine;
 
 public class MaterialColorCycler : MonoBehaviour
 {
-    public Material targetMaterial;
-    public float colorChangeSpeed = 1f;
-    public bool affectEmission = true;
+    [SerializeField] private Material targetMaterial;
+    [SerializeField] private float colorChangeSpeed = 1f;
+    [SerializeField] private bool affectEmission = true;
+    [SerializeField] private float[] colorPhases = new float[] { 0f, 2f, 4f };
+
+    private float GetNormalizedSin(float time, float phase)
+    {
+        return Mathf.Sin(time + phase) * 0.5f + 0.5f;
+    }
 
     private void Update()
     {
-        float r = Mathf.Sin(Time.time * colorChangeSpeed) * 0.5f + 0.5f;
-        float g = Mathf.Sin(Time.time * colorChangeSpeed + 2f) * 0.5f + 0.5f;
-        float b = Mathf.Sin(Time.time * colorChangeSpeed + 4f) * 0.5f + 0.5f;
+        float time = Time.time * colorChangeSpeed;
+
+        float r = GetNormalizedSin(time, colorPhases[0]);
+        float g = GetNormalizedSin(time, colorPhases[1]);
+        float b = GetNormalizedSin(time, colorPhases[2]);
 
         Color dynamicColor = new Color(r, g, b);
 
