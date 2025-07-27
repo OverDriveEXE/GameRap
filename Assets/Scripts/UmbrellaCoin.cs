@@ -8,7 +8,7 @@ public class UmbrellaCoin : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            FindObjectOfType<ScoreManager>().AddPoint();
+            ScoreManager.Instance.AddPoint();
             gameObject.SetActive(false);
         }
     }
